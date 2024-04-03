@@ -3,7 +3,7 @@ import { Select, MenuItem } from '@mui/material';
 import { useDispatch } from "react-redux";
 import { setItemsOnPage } from "../slices/tagsSlice";
 
-interface PageAmountSelectProps {
+export interface PageAmountSelectProps {
   itemsOnPage: number
 }
 

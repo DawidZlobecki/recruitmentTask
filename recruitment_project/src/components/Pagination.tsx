@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { setPageNumber } from "../slices/tagsSlice";
 
-interface PaginationProps {
+export interface PaginationProps {
   pageNumber: number;
   isLoading: boolean;
   hasNextPage: boolean;

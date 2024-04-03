@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { setSortBy } from "../slices/tagsSlice";
 
-interface SortByProps {
+export interface SortByProps {
     sortBy: string;
 }
 

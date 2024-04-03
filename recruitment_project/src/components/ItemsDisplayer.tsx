@@ -6,7 +6,7 @@ import { RootState } from "../store";
 import { setOrder } from "../slices/tagsSlice";
 import { TagItem } from "../services/axios";
 
-interface ItemsDisplayerProps {
+export interface ItemsDisplayerProps {
   itemsOnPage: number;
   order: "asc" | "desc";
   tags: TagItem[];
