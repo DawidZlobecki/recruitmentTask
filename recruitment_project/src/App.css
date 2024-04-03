@@ -1,0 +1,28 @@
+.App{
+    background-color: #caf0f8;
+    flex: 1;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+
+}
+
+.DataContainer{
+    width: 1024px;
+    background-color: #f0fcff;
+    margin: 25px 0px;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.Row{
+    flex: 1;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+};
+.PageAmountContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
