@@ -5,16 +5,12 @@ import PageAmountSelect from './components/PageAmountSelect';
 import ItemsDisplayer from './components/ItemsDisplayer';
 
 function App() {
-  const [tags, setTags] = useState<TagItem[]>([
-    {
-      name: 'string',
-      count: 12
-    }]);
-    
+  const [tags, setTags] = useState<TagItem[]>([]);
   const [itemsOnPage, setItemsOnPage] = useState<number>(10);
+  const [order, setOrder] = useState<'asc' | 'desc'>('desc')
 
   useEffect(() => {
-    fetchTags({itemsOnPage})
+    fetchTags({itemsOnPage, order})
       .then(data => {
         console.log('DATAAA', data.length, data)
         setTags(data);
@@ -22,7 +18,7 @@ function App() {
       .catch(error => {
         console.error('Błąd pobierania danych:', error);
       });
-  }, [itemsOnPage]);
+  }, [itemsOnPage, order]);
 
   return (
     <div className="App">
@@ -35,7 +31,7 @@ function App() {
           </div>
         </div>
         <div className='ItemsDisplayerContainer'>
-          <ItemsDisplayer items={tags} itemsOnPage={itemsOnPage} />
+          <ItemsDisplayer order={order} setOrder={setOrder} items={tags} itemsOnPage={itemsOnPage} />
         </div>
       </div>
     </div>
