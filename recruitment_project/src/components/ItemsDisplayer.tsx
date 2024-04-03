@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TagItem } from "../services/axios";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 interface ItemsDisplayerProps {
@@ -8,9 +8,10 @@ interface ItemsDisplayerProps {
     itemsOnPage: number;
     order: 'asc' | 'desc';
     setOrder: (order: 'asc' | 'desc') => void;
+    isLoading: boolean;
 }
 
-const ItemsDisplayer = ({items, itemsOnPage, order, setOrder}: ItemsDisplayerProps) => {
+const ItemsDisplayer = ({items, itemsOnPage, order, setOrder, isLoading}: ItemsDisplayerProps) => {
     const [isIconRotated, setIsIconRotated] = useState<boolean>(true);
 
     const arrowIconStyles = {
@@ -25,7 +26,6 @@ const ItemsDisplayer = ({items, itemsOnPage, order, setOrder}: ItemsDisplayerPro
       } else if(order === 'desc'){
         setOrder('asc')
       }
-      console.log('ZMIANA! ', order)
     }
 
     return (
@@ -38,11 +38,19 @@ const ItemsDisplayer = ({items, itemsOnPage, order, setOrder}: ItemsDisplayerPro
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((item, index) => (
+            {isLoading 
+            ? Array.from({ length: itemsOnPage }).map((_, index) => (
               <TableRow key={index}>
-                <TableCell className="listItemRow">{index + 1}. {item.name}</TableCell>
-                <TableCell className="listItemRow" sx={{textAlign: 'right'}}>{item.count}</TableCell>
+                <TableCell  sx={{padding: 0}} colSpan={2}><Skeleton width={'100%'} height={52} /></TableCell>
               </TableRow>
+            ))
+            : items.map((item, index) => (
+                <TableRow key={index}>
+                  <>
+                  <TableCell className="listItemRow">{index + 1}. {item.name}</TableCell>
+                  <TableCell className="listItemRow" sx={{textAlign: 'right'}}>{item.count}</TableCell>
+                  </>
+                </TableRow>
             ))}
           </TableBody>
         </Table>

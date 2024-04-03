@@ -9,13 +9,15 @@ function App() {
   const [tags, setTags] = useState<TagItem[]>([]);
   const [itemsOnPage, setItemsOnPage] = useState<number>(10);
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
-  const [sortBy, setSortBy] = useState<'popular' | 'activity' | 'name'>('popular')
+  const [sortBy, setSortBy] = useState<'popular' | 'activity' | 'name'>('popular');
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
+    setIsLoading(true);
     fetchTags({itemsOnPage, order, sortBy})
       .then(data => {
-        console.log('DATAAA', data.length, data)
         setTags(data);
+        setIsLoading(false);
       })
       .catch(error => {
         console.error('Błąd pobierania danych:', error);
@@ -36,7 +38,7 @@ function App() {
           </div>
         </div>
         <div className='ItemsDisplayerContainer'>
-          <ItemsDisplayer order={order} setOrder={setOrder} items={tags} itemsOnPage={itemsOnPage} />
+          <ItemsDisplayer isLoading={isLoading} order={order} setOrder={setOrder} items={tags} itemsOnPage={itemsOnPage} />
         </div>
       </div>
     </div>
