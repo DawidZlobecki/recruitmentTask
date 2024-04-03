@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import SelectInput from "@mui/material/Select/SelectInput";
+import React from "react";
 import { Select, MenuItem } from '@mui/material';
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useDispatch } from "react-redux";
 import { setItemsOnPage } from "../slices/tagsSlice";
 
+export interface PageAmountSelectProps {
+  itemsOnPage: number
+}
 
-
-const PageAmountSelect: React.FC = () => {
+const PageAmountSelect = ({itemsOnPage}: PageAmountSelectProps) => {
 
   const dispatch = useDispatch();
-  const itemsOnPage = useSelector((state: RootState) => state.tags.itemsOnPage);
  
   const handleChange = (event: any) => {
     dispatch(setItemsOnPage(event.target.value));

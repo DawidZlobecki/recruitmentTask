@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { setSortBy } from "../slices/tagsSlice";
 
-const SortBy = () => {
+export interface SortByProps {
+    sortBy: string;
+}
+
+const SortBy = ({sortBy}: SortByProps) => {
 
     const dispatch = useDispatch();
-    const sortBy = useSelector((state: RootState) => state.tags.sortBy);
     
     const handleChange = (event: any) => {
         dispatch(setSortBy(event.target.value));
