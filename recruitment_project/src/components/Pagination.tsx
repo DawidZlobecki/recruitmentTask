@@ -29,7 +29,7 @@ const Pagination = ({pageNumber, setPageNumber, hasNextPage, isLoading}: Paginat
       <IconButton onClick={handlePrevClick} disabled={pageNumber === 1}>
         <NavigateBeforeIcon />
       </IconButton>
-      <Typography>Page {pageNumber} of </Typography>
+      <Typography>Strona nr {pageNumber}</Typography>
       <IconButton onClick={handleNextClick} disabled={!hasNextPage || isLoading}>
         <NavigateNextIcon />
       </IconButton>
