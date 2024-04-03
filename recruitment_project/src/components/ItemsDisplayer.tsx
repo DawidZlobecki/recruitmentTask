@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { TagItem } from "../services/axios";
 import { Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { setOrder } from "../slices/tagsSlice";
 
-interface ItemsDisplayerProps {
-    items: TagItem[];
-    itemsOnPage: number;
-    order: 'asc' | 'desc';
-    setOrder: (order: 'asc' | 'desc') => void;
-    isLoading: boolean;
-}
 
-const ItemsDisplayer = ({items, itemsOnPage, order, setOrder, isLoading}: ItemsDisplayerProps) => {
+
+const ItemsDisplayer = () => {
+    const dispatch = useDispatch();
     const [isIconRotated, setIsIconRotated] = useState<boolean>(true);
+    const itemsOnPage = useSelector((state: RootState) => state.tags.itemsOnPage);
+    const order = useSelector((state: RootState) => state.tags.order);
+    const tags = useSelector((state: RootState) => state.tags.tags);
+    const isLoading = useSelector((state: RootState) => state.tags.isLoading);
+
+
 
     const arrowIconStyles = {
       transform: isIconRotated ? 'rotate(-90deg)' : 'rotate(90deg)',
@@ -22,9 +25,9 @@ const ItemsDisplayer = ({items, itemsOnPage, order, setOrder, isLoading}: ItemsD
     const handleItemsOrder = ()=> {
       setIsIconRotated(!isIconRotated);
       if(order === 'asc'){
-        setOrder('desc')
+        dispatch(setOrder('desc'))
       } else if(order === 'desc'){
-        setOrder('asc')
+        dispatch(setOrder('asc'))
       }
     }
 
@@ -44,7 +47,7 @@ const ItemsDisplayer = ({items, itemsOnPage, order, setOrder, isLoading}: ItemsD
                 <TableCell  sx={{padding: 0}} colSpan={2}><Skeleton width={'100%'} height={52} /></TableCell>
               </TableRow>
             ))
-            : items.map((item, index) => (
+            : tags.map((item, index) => (
                 <TableRow key={index}>
                   <>
                   <TableCell className="listItemRow">{index + 1}. {item.name}</TableCell>

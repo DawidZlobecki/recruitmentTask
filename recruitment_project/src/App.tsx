@@ -1,54 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { TagItem, fetchTags } from './services/axios';
 import PageAmountSelect from './components/PageAmountSelect';
 import ItemsDisplayer from './components/ItemsDisplayer';
 import SortBy from './components/SortBy';
 import Pagination from './components/Pagination';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import store, { RootState } from './store';
+import { setTags, setIsLoading, setHasNextPage } from './slices/tagsSlice';
+
+interface fetchTagsInterface {
+  items: TagItem[];
+  hasNextPage: boolean;
+}
 
 function App() {
-  const [tags, setTags] = useState<TagItem[]>([]);
-  const [itemsOnPage, setItemsOnPage] = useState<number>(10);
-  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
-  const [sortBy, setSortBy] = useState<'popular' | 'activity' | 'name'>('popular');
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [pageNumber, setPageNumber] = useState<number>(1)
+  const dispatch = useDispatch();
+  const itemsOnPage = useSelector((state: RootState) => state.tags.itemsOnPage);
+  const order = useSelector((state: RootState) => state.tags.order);
+  const sortBy = useSelector((state: RootState) => state.tags.sortBy);
+  const pageNumber = useSelector((state: RootState) => state.tags.pageNumber);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetchTags({itemsOnPage, order, sortBy})
-      .then(data => {
-        setTags(data);
-        setIsLoading(false);
+    dispatch(setIsLoading(true));
+    fetchTags({ itemsOnPage, order, sortBy, pageNumber}) 
+      .then(({items, hasNextPage}: fetchTagsInterface) => {
+        dispatch(setTags(items));
+        dispatch(setHasNextPage(hasNextPage))
+        dispatch(setIsLoading(false));
       })
       .catch(error => {
         console.error('Błąd pobierania danych:', error);
       });
-  }, [itemsOnPage, order, sortBy, pageNumber]);
+  }, [itemsOnPage, order, sortBy, pageNumber, dispatch]);
 
   return (
-    <div className="App">
-      <div className='DataContainer'>
-        <div>
-          <div className='Row'>
-            <div className='SortByContainer'>
-              Sortuj po:&ensp;
-              <SortBy sortBy={sortBy} setSortBy={setSortBy} />
+      <div className="App">
+        <div className='DataContainer'>
+          <div>
+            <div className='Row'>
+              <div className='SortByContainer'>
+                Sortuj po:&ensp;
+                <SortBy />
+              </div>
+              <div className='PageAmountContainer'>
+                Ilość elementów na stronie:&ensp;
+                <PageAmountSelect />
+              </div>
             </div>
-            <div className='PageAmountContainer'>
-              Ilość elementów na stronie:&ensp;
-              <PageAmountSelect itemsOnPage={itemsOnPage} setItemsOnPage={setItemsOnPage}/>
+            <div className='ItemsDisplayerContainer'>
+              <ItemsDisplayer />
             </div>
           </div>
-          <div className='ItemsDisplayerContainer'>
-            <ItemsDisplayer isLoading={isLoading} order={order} setOrder={setOrder} items={tags} itemsOnPage={itemsOnPage} />
+          <div className='PaginationContainer'>
+            <Pagination />
           </div>
-        </div>
-        <div className='PaginationContainer'>
-          <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} hasNextPage={true} isLoading={isLoading} />
         </div>
       </div>
-    </div>
   );
 }
 

@@ -7,20 +7,22 @@ export interface TagItem {
   count: number;
 }
 
-interface TagsApiResponse {
+export interface TagsApiResponse {
   items: TagItem[];
+  has_more: boolean;
 }
 
 interface fetchTagsParams {
   itemsOnPage: number;
   order: 'asc' | 'desc';
-  sortBy: 'popular' | 'activity' | 'name'
+  sortBy: 'popular' | 'activity' | 'name';
+  pageNumber: number;
 }
 
-export const fetchTags = async ({itemsOnPage, order, sortBy}: fetchTagsParams): Promise<TagItem[]> => {
+export const fetchTags = async ({itemsOnPage, order, sortBy, pageNumber}: fetchTagsParams): Promise<{items: TagItem[]; hasNextPage: boolean}> => {
   try {
-    const response: AxiosResponse<TagsApiResponse> = await axios.get(`${API_BASE_URL}/tags?pagesize=${itemsOnPage}&order=${order}&sort=${sortBy}&site=stackoverflow`);
-    return response.data.items;
+    const response: AxiosResponse<TagsApiResponse> = await axios.get(`${API_BASE_URL}/tags?page=${pageNumber}&pagesize=${itemsOnPage}&order=${order}&sort=${sortBy}&site=stackoverflow`);
+    return {items: response.data.items, hasNextPage: response.data.has_more};
   } catch (error) {
     console.error('Error fetching tags:', error);
     throw error;

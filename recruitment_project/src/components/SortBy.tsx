@@ -1,14 +1,16 @@
 import { MenuItem, Select } from "@mui/material";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { setSortBy } from "../slices/tagsSlice";
 
-interface SortByProps {
-    sortBy: string;
-    setSortBy: (sortBy: 'popular' | 'activity' | 'name') => void;
-}
+const SortBy = () => {
 
-const SortBy = ({sortBy, setSortBy}: SortByProps) => {
+    const dispatch = useDispatch();
+    const sortBy = useSelector((state: RootState) => state.tags.sortBy);
+    
     const handleChange = (event: any) => {
-        setSortBy(event.target.value);
+        dispatch(setSortBy(event.target.value));
       };
 
     const handleNameOfSorting = (name: string) => {
@@ -34,9 +36,6 @@ const SortBy = ({sortBy, setSortBy}: SortByProps) => {
     {['popular', 'activity', 'name'].map(item => {
         return <MenuItem key={item} value={item}>{handleNameOfSorting(item)}</MenuItem>
     })}
-    {/* {Array.from({ length: 10 }, (_, index) => 10 + index * 10).map((ageOption) => (
-      <MenuItem key={ageOption} value={ageOption}>{ageOption}</MenuItem>
-    ))} */}
   </Select>
   );
 }
