@@ -6,12 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { setPageNumber } from "../slices/tagsSlice";
 
-const Pagination = () => {
+interface PaginationProps {
+  pageNumber: number;
+  isLoading: boolean;
+  hasNextPage: boolean;
+}
+
+const Pagination = ({pageNumber, isLoading, hasNextPage}: PaginationProps) => {
 
     const dispatch = useDispatch();
-    const pageNumber = useSelector((state: RootState) => state.tags.pageNumber);
-    const isLoading = useSelector((state: RootState) => state.tags.isLoading);
-    const hasNextPage =  useSelector((state: RootState) => state.tags.hasNextPage);
 
 
     const handlePrevClick = () => {

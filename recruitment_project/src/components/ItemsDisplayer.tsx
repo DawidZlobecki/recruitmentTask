@@ -4,18 +4,18 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { setOrder } from "../slices/tagsSlice";
+import { TagItem } from "../services/axios";
 
+interface ItemsDisplayerProps {
+  itemsOnPage: number;
+  order: "asc" | "desc";
+  tags: TagItem[];
+  isLoading: boolean;
+}
 
-
-const ItemsDisplayer = () => {
+const ItemsDisplayer = ({itemsOnPage, order, tags, isLoading}: ItemsDisplayerProps) => {
     const dispatch = useDispatch();
     const [isIconRotated, setIsIconRotated] = useState<boolean>(true);
-    const itemsOnPage = useSelector((state: RootState) => state.tags.itemsOnPage);
-    const order = useSelector((state: RootState) => state.tags.order);
-    const tags = useSelector((state: RootState) => state.tags.tags);
-    const isLoading = useSelector((state: RootState) => state.tags.isLoading);
-
-
 
     const arrowIconStyles = {
       transform: isIconRotated ? 'rotate(-90deg)' : 'rotate(90deg)',

@@ -16,10 +16,13 @@ interface fetchTagsInterface {
 
 function App() {
   const dispatch = useDispatch();
+  const tags = useSelector((state: RootState) => state.tags.tags);
   const itemsOnPage = useSelector((state: RootState) => state.tags.itemsOnPage);
   const order = useSelector((state: RootState) => state.tags.order);
   const sortBy = useSelector((state: RootState) => state.tags.sortBy);
   const pageNumber = useSelector((state: RootState) => state.tags.pageNumber);
+  const isLoading = useSelector((state: RootState) => state.tags.isLoading);
+  const hasNextPage = useSelector((state: RootState) => state.tags.hasNextPage);
 
   useEffect(() => {
     dispatch(setIsLoading(true));
@@ -41,19 +44,19 @@ function App() {
             <div className='Row'>
               <div className='SortByContainer'>
                 Sortuj po:&ensp;
-                <SortBy />
+                <SortBy sortBy={sortBy}  />
               </div>
               <div className='PageAmountContainer'>
                 Ilość elementów na stronie:&ensp;
-                <PageAmountSelect />
+                <PageAmountSelect itemsOnPage={itemsOnPage} />
               </div>
             </div>
             <div className='ItemsDisplayerContainer'>
-              <ItemsDisplayer />
+              <ItemsDisplayer isLoading={isLoading} itemsOnPage={itemsOnPage} order={order} tags={tags} />
             </div>
           </div>
           <div className='PaginationContainer'>
-            <Pagination />
+            <Pagination hasNextPage={hasNextPage} isLoading={isLoading} pageNumber={pageNumber} />
           </div>
         </div>
       </div>

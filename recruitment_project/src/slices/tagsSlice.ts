@@ -13,7 +13,7 @@ interface TagsState {
 
 const initialState: TagsState = {
   tags: [],
-  itemsOnPage: 10,
+  itemsOnPage: 40,
   order: 'desc',
   sortBy: 'popular',
   isLoading: true,
