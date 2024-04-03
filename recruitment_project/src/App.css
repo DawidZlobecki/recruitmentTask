@@ -13,6 +13,8 @@
     margin: 25px 0px;
     border-radius: 25px;
     padding: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .Row{
@@ -34,8 +36,22 @@
     flex-direction: row;
     align-items: center;
 }
-.ItemsDisplayerContainer {
+
+.ItemsDisplayerContainer{
     display: flex;
     justify-content: center;
 }
 
+.PaginationContainer{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 50px 0;
+}
+.PaginationWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}

@@ -34,7 +34,7 @@ const ItemsDisplayer = ({items, itemsOnPage, order, setOrder, isLoading}: ItemsD
           <TableHead>
             <TableRow>
               <TableCell className="listItemHeader" sx={{fontSize: '18px'}}>Nazwa</TableCell>
-              <TableCell onClick={handleItemsOrder} className="listItemHeader" sx={{fontSize: '18px', ...listItemHeaderStyles }}>Liczba powiązanych postów <NavigateNextIcon sx={arrowIconStyles}></NavigateNextIcon></TableCell>
+              <TableCell onClick={handleItemsOrder} className="listItemHeader" sx={{fontSize: '18px', ...listItemHeaderStyles }}>Liczba powiązanych postów <NavigateNextIcon sx={arrowIconStyles} /></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

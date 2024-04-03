@@ -4,6 +4,7 @@ import { TagItem, fetchTags } from './services/axios';
 import PageAmountSelect from './components/PageAmountSelect';
 import ItemsDisplayer from './components/ItemsDisplayer';
 import SortBy from './components/SortBy';
+import Pagination from './components/Pagination';
 
 function App() {
   const [tags, setTags] = useState<TagItem[]>([]);
@@ -11,6 +12,7 @@ function App() {
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
   const [sortBy, setSortBy] = useState<'popular' | 'activity' | 'name'>('popular');
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [pageNumber, setPageNumber] = useState<number>(1)
 
   useEffect(() => {
     setIsLoading(true);
@@ -22,23 +24,28 @@ function App() {
       .catch(error => {
         console.error('Błąd pobierania danych:', error);
       });
-  }, [itemsOnPage, order, sortBy]);
+  }, [itemsOnPage, order, sortBy, pageNumber]);
 
   return (
     <div className="App">
       <div className='DataContainer'>
-        <div className='Row'>
-          <div className='SortByContainer'>
-            Ilość elementów na stronie:&ensp;
-            <SortBy sortBy={sortBy} setSortBy={setSortBy} />
+        <div>
+          <div className='Row'>
+            <div className='SortByContainer'>
+              Sortuj po:&ensp;
+              <SortBy sortBy={sortBy} setSortBy={setSortBy} />
+            </div>
+            <div className='PageAmountContainer'>
+              Ilość elementów na stronie:&ensp;
+              <PageAmountSelect itemsOnPage={itemsOnPage} setItemsOnPage={setItemsOnPage}/>
+            </div>
           </div>
-          <div className='PageAmountContainer'>
-            Ilość elementów na stronie:&ensp;
-            <PageAmountSelect itemsOnPage={itemsOnPage} setItemsOnPage={setItemsOnPage}/>
+          <div className='ItemsDisplayerContainer'>
+            <ItemsDisplayer isLoading={isLoading} order={order} setOrder={setOrder} items={tags} itemsOnPage={itemsOnPage} />
           </div>
         </div>
-        <div className='ItemsDisplayerContainer'>
-          <ItemsDisplayer isLoading={isLoading} order={order} setOrder={setOrder} items={tags} itemsOnPage={itemsOnPage} />
+        <div className='PaginationContainer'>
+          <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} hasNextPage={true} isLoading={isLoading} />
         </div>
       </div>
     </div>
