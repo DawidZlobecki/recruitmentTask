@@ -14,11 +14,12 @@ interface TagsApiResponse {
 interface fetchTagsParams {
   itemsOnPage: number;
   order: 'asc' | 'desc';
+  sortBy: 'popular' | 'activity' | 'name'
 }
 
-export const fetchTags = async ({itemsOnPage, order}: fetchTagsParams): Promise<TagItem[]> => {
+export const fetchTags = async ({itemsOnPage, order, sortBy}: fetchTagsParams): Promise<TagItem[]> => {
   try {
-    const response: AxiosResponse<TagsApiResponse> = await axios.get(`${API_BASE_URL}/tags?pagesize=${itemsOnPage}&order=${order}&sort=popular&site=stackoverflow`);
+    const response: AxiosResponse<TagsApiResponse> = await axios.get(`${API_BASE_URL}/tags?pagesize=${itemsOnPage}&order=${order}&sort=${sortBy}&site=stackoverflow`);
     return response.data.items;
   } catch (error) {
     console.error('Error fetching tags:', error);

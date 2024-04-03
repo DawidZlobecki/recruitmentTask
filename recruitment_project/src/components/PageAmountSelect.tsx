@@ -20,8 +20,8 @@ const PageAmountSelect: React.FC<PageAmountSelectProps> = ({itemsOnPage, setItem
       displayEmpty
       inputProps={{ 'aria-label': 'Wiek' }}
     >
-      {Array.from({ length: 10 }, (_, index) => 10 + index * 10).map((ageOption) => (
-        <MenuItem key={ageOption} value={ageOption}>{ageOption}</MenuItem>
+      {Array.from({ length: 10 }, (_, index) => 10 + index * 10).map((n) => (
+        <MenuItem key={n} value={n}>{n}</MenuItem>
       ))}
     </Select>
   );
