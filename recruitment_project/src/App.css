@@ -1,7 +1,7 @@
 .App{
     background-color: #caf0f8;
     flex: 1;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
 
@@ -25,4 +25,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+.ItemsDisplayerContainer {
+    display: flex;
+    justify-content: center;
 }

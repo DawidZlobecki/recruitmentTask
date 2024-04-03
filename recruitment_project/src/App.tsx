@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { TagItem, fetchTags } from './services/axios';
 import PageAmountSelect from './components/PageAmountSelect';
+import ItemsDisplayer from './components/ItemsDisplayer';
 
 function App() {
   const [tags, setTags] = useState<TagItem[]>([
@@ -10,10 +11,10 @@ function App() {
       count: 12
     }]);
     
-  const [itemsOnPageNumber, setItemsOnPageNumber] = useState<number>(10);
+  const [itemsOnPage, setItemsOnPage] = useState<number>(10);
 
   useEffect(() => {
-    fetchTags({itemsOnPageNumber})
+    fetchTags({itemsOnPage})
       .then(data => {
         console.log('DATAAA', data.length, data)
         setTags(data);
@@ -21,7 +22,7 @@ function App() {
       .catch(error => {
         console.error('Błąd pobierania danych:', error);
       });
-  }, [itemsOnPageNumber]);
+  }, [itemsOnPage]);
 
   return (
     <div className="App">
@@ -30,10 +31,12 @@ function App() {
           <div></div>
           <div className='PageAmountContainer'>
             Ilość elementów na stronie:&ensp;
-            <PageAmountSelect itemsOnPageNumber={itemsOnPageNumber} setItemsOnPageNumber={setItemsOnPageNumber}/>
+            <PageAmountSelect itemsOnPage={itemsOnPage} setItemsOnPage={setItemsOnPage}/>
           </div>
         </div>
-        
+        <div className='ItemsDisplayerContainer'>
+          <ItemsDisplayer items={tags} itemsOnPage={itemsOnPage} />
+        </div>
       </div>
     </div>
   );

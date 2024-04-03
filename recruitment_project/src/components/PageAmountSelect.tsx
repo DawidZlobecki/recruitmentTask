@@ -3,19 +3,19 @@ import SelectInput from "@mui/material/Select/SelectInput";
 import { Select, MenuItem } from '@mui/material';
 
 interface PageAmountSelectProps {
-  itemsOnPageNumber: number;
-  setItemsOnPageNumber: (pageNumber: number) => void;
+  itemsOnPage: number;
+  setItemsOnPage: (pageNumber: number) => void;
 }
 
-const PageAmountSelect: React.FC<PageAmountSelectProps> = ({itemsOnPageNumber, setItemsOnPageNumber})=> {
+const PageAmountSelect: React.FC<PageAmountSelectProps> = ({itemsOnPage, setItemsOnPage})=> {
 
   const handleChange = (event: any) => {
-    setItemsOnPageNumber(event.target.value);
+    setItemsOnPage(event.target.value);
   };
 
   return (
     <Select
-      value={itemsOnPageNumber}
+      value={itemsOnPage}
       onChange={handleChange}
       displayEmpty
       inputProps={{ 'aria-label': 'Wiek' }}
